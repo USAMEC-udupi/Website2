@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USAMEC - Spiritual Organization</title>
+    <link rel="icon" type="image/png" href="./src/assets/LOGO.jpeg">
+    <link rel="apple-touch-icon" href="./src/assets/LOGO.jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --primary: #FF7A00;
+            --secondary: #800000;
+            --accent: #FFFFFF;
+            --neon-orange: #FF7A00;
+            --neon-maroon: #800000;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: var(--darker-bg);
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
+        
+        /* Animated Background */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 122, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(128, 0, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 122, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0a 0%, #050505 100%);
+        }
+        
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255, 122, 0, 0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(128, 0, 0, 0.3), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 122, 0, 0.4), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(128, 0, 0, 0.3), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: cosmic-drift 20s linear infinite;
+        }
+        
+        @keyframes cosmic-drift {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-100px); }
+        }
+        
+        /* Futuristic Glass Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 122, 0, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 20px rgba(255, 122, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 122, 0, 0.1), transparent);
+            transition: left 0.6s;
+        }
+        
+        .glass-card:hover::before {
+            left: 100%;
+        }
+        
+        /* Enhanced Glow Effects */
+        .glow-orange {
+            box-shadow: 
+                0 0 20px rgba(255, 122, 0, 0.6),
+                0 0 40px rgba(255, 122, 0, 0.4),
+                0 0 60px rgba(255, 122, 0, 0.2);
+            animation: pulse-glow-orange 3s ease-in-out infinite alternate;
+        }
+        
+        .glow-maroon {
+            box-shadow: 
+                0 0 20px rgba(128, 0, 0, 0.6),
+                0 0 40px rgba(128, 0, 0, 0.4),
+                0 0 60px rgba(128, 0, 0, 0.2);
+            animation: pulse-glow-maroon 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-glow-orange {
+            0% { box-shadow: 0 0 20px rgba(255, 122, 0, 0.6), 0 0 40px rgba(255, 122, 0, 0.4), 0 0 60px rgba(255, 122, 0, 0.2); }
+            100% { box-shadow: 0 0 30px rgba(255, 122, 0, 0.8), 0 0 60px rgba(255, 122, 0, 0.6), 0 0 90px rgba(255, 122, 0, 0.4); }
+        }
+        
+        @keyframes pulse-glow-maroon {
+            0% { box-shadow: 0 0 20px rgba(128, 0, 0, 0.6), 0 0 40px rgba(128, 0, 0, 0.4), 0 0 60px rgba(128, 0, 0, 0.2); }
+            100% { box-shadow: 0 0 30px rgba(128, 0, 0, 0.8), 0 0 60px rgba(128, 0, 0, 0.6), 0 0 90px rgba(128, 0, 0, 0.4); }
+        }
+        
+        /* Futuristic Navigation */
+        .futuristic-nav {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, transparent, var(--neon-orange), var(--neon-maroon), transparent) 1;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-orange), var(--neon-maroon));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--neon-orange) !important;
+            text-shadow: 0 0 10px rgba(255, 122, 0, 0.8);
+        }
+        
+        /* Hero Section Enhancements */
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--neon-orange);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(odd) {
+            background: var(--neon-maroon);
+            animation-duration: 8s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Enhanced Fade In Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Enhanced Timeline */
+        .timeline-marker {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-maroon));
+            position: relative;
+            z-index: 3;
+            box-shadow: 0 0 20px rgba(255, 122, 0, 0.8);
+        }
+        
+        .timeline-marker::before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 122, 0, 0.2);
+            top: -10px;
+            left: -10px;
+            z-index: 1;
+            animation: pulse-ring 2s infinite;
+        }
+        
+        .timeline-marker::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 122, 0, 0.1);
+            top: -20px;
+            left: -20px;
+            z-index: 0;
+            animation: pulse-ring 2s infinite 0.5s;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+        
+        /* Enhanced Institution Cards */
+        .institution-card {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .institution-card:hover {
+            transform: translateY(-20px) rotateX(5deg) rotateY(5deg) scale(1.05);
+            box-shadow: 
+                0 25px 50px rgba(255, 122, 0, 0.3),
+                0 0 50px rgba(255, 122, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .institution-card img {
+            transition: all 0.5s ease;
+        }
+        
+        .institution-card:hover img {
+            transform: scale(1.1);
+            filter: brightness(1.2) contrast(1.1);
+        }
+        
+        /* Enhanced Map Pins */
+        .map-pin {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-maroon));
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 122, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .map-pin::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 122, 0, 0.3);
+            top: -10px;
+            left: -10px;
+            animation: pulse-ring 2s infinite;
+        }
+        
+        .map-pin:hover {
+            transform: scale(1.5);
+            box-shadow: 0 0 25px rgba(255, 122, 0, 1);
+        }
+        
+        /* Enhanced Gallery */
+        .gallery-item {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05) rotateZ(2deg);
+            box-shadow: 0 15px 30px rgba(255, 122, 0, 0.4);
+        }
+        
+        .gallery-overlay {
+            opacity: 0;
+            transition: all 0.4s ease;
+            background: linear-gradient(45deg, rgba(255, 122, 0, 0.8), rgba(128, 0, 0, 0.8));
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        /* Enhanced Buttons */
+        .futuristic-btn {
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-maroon));
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 122, 0, 0.4);
+        }
+        
+        .futuristic-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .futuristic-btn:hover::before {
+            left: 100%;
+        }
+        
+        .futuristic-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 122, 0, 0.6);
+        }
+        
+        /* Counter Animation Enhancement */
+        .counter {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(255, 122, 0, 0.8);
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-maroon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Form Enhancements */
+        .futuristic-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 122, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .futuristic-input:focus {
+            outline: none;
+            border-color: var(--neon-orange);
+            box-shadow: 0 0 20px rgba(255, 122, 0, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Enhancements */
+        @media (max-width: 768px) {
+            .leadership-cards {
+                flex-direction: column;
+            }
+            
+            .mission-vision {
+                flex-direction: column;
+            }
+            
+            .timeline-container {
+                overflow-x: auto;
+                padding-bottom: 20px;
+            }
+            
+            .institution-card:hover {
+                transform: translateY(-10px) scale(1.02);
+            }
+            
+            h1 {
+                font-size: 2.5rem !important;
+            }
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--neon-orange), var(--neon-maroon));
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, var(--neon-maroon), var(--neon-orange));
+        }
+        
+        /* Loading Animation */
+        .loading-ring {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 122, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--neon-orange);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Cosmic Background -->
+    <div class="cosmic-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 futuristic-nav py-4 px-6 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="./src/assets/LOGO.jpeg" alt="USAMEC Logo" class="w-12 h-12 rounded-full object-cover shadow-lg" />
+                <span class="text-2xl font-bold text-white" style="font-family: 'Orbitron', monospace;">USAMEC</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-white hover:text-orange-400 transition-all duration-300 nav-link active">Home</a>
+                <a href="#leadership" class="text-white hover:text-orange-400 transition-all duration-300 nav-link">Leadership</a>
+                <a href="#mission" class="text-white hover:text-orange-400 transition-all duration-300 nav-link">Mission</a>
+                <a href="#timeline" class="text-white hover:text-orange-400 transition-all duration-300 nav-link">History</a>
+                <a href="#institutions" class="text-white hover:text-orange-400 transition-all duration-300 nav-link">Institutions</a>
+                <a href="#contact" class="text-white hover:text-orange-400 transition-all duration-300 nav-link">Contact</a>
+            </div>
+            <button class="md:hidden text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="hero-particles">
+            <!-- Particles will be generated by JavaScript -->
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40"></div>
+        <div class="text-center z-10 px-4 max-w-5xl mx-auto">
+            <h1 class="text-6xl md:text-8xl font-bold mb-8 text-white fade-in" style="text-shadow: 0 0 30px rgba(255, 122, 0, 0.8), 0 0 60px rgba(255, 122, 0, 0.4);">
+                Udupi Shree Adamaru Matha Education Council
+            </h1>
+            <p class="text-2xl md:text-3xl mb-12 text-white opacity-90 fade-in" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+                Illuminating lives through spiritual wisdom and educational excellence since 1950
+            </p>
+            <a href="#institutions" class="futuristic-btn text-white text-lg fade-in inline-block">
+                Explore Our Institutions
+            </a>
+        </div>
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+            <a href="#leadership" class="text-white animate-bounce">
+                <i class="fas fa-chevron-down text-4xl" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.8);"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Leadership Messages -->
+    <section id="leadership" class="py-20 px-4 max-w-7xl mx-auto">
+        <h2 class="text-5xl font-bold text-center mb-20 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Divine Leadership</h2>
+        <div class="flex flex-col lg:flex-row gap-12 leadership-cards">
+            <!-- Founder Card -->
+            <div class="flex-1 glass-card p-10 rounded-xl slide-in-left">
+                <div class="flex flex-col md:flex-row items-center mb-8">
+                    <div class="relative mb-8 md:mb-0 md:mr-8">
+                        <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-orange-500 glow-orange">
+                            <img id="founder" src="./src/assets/founder.jpg" alt="Founder Swamiji" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-3" style="font-family: 'Orbitron', monospace;">H.H. Sri Vibudesha Theertha Swamiji</h3>
+                        <p class="text-orange-400 text-lg">Founder President, USAMEC</p>
+                    </div>
+                </div>
+                <div class="text-gray-300 mb-8 space-y-4">
+                    <p class="text-lg leading-relaxed">"Schools, Colleges and Universities are student-centered activities. These exist to shape Nation's young ones physically and spiritually. Shapers are to be selected very carefully. They have to have the required competence, dedication, and patriotism. A Nation's future can be shaped only through shaping the young ones of the Nation. Spiritual, mental, and physical aspects of human beings shall be treated with equanimity and understanding."</p>
+                    <p class="text-lg leading-relaxed">"Poornaprajna Institutions are trying to perform this duty towards the Nation. In all Poornaprajna Institutions, students are treated as Nation's children and God's children. Hence, all possible efforts are made to see that they get necessary training and guidance."</p>
+                </div>
+                <div class="mt-10">
+                    <p class="text-orange-400 text-lg">- His Holiness Sri Sri Sri Vibudhesha Theertha Swamiji </p>
+                </div>
+            </div>
+            
+            <script type="module">
+                import { images } from './src/images.js';
+                const el = document.getElementById('president-photo');
+                if (el) {
+                    el.src = images.leaders.president;
+                }
+            </script>
+            <!-- President Card -->
+            <div class="flex-1 glass-card p-10 rounded-xl slide-in-right">
+                <div class="flex flex-col md:flex-row items-center mb-8">
+                    <div class="relative mb-8 md:mb-0 md:mr-8">
+                        <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-maroon-600 glow-maroon">
+                            <img id="president-photo" src="./src/assets/swami.jpg" alt="President Swamiji" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-3" style="font-family: 'Orbitron', monospace;">H.H. Sri Eeshapriya Theertha Swamiji</h3>
+                        <p class="text-orange-400 text-lg">Current President, USAMEC</p>
+                    </div>
+                </div>
+                <div class="text-gray-300 mb-8 space-y-4">
+                    <p class="text-lg leading-relaxed">"Nowadays the important aim of education has become to prepare the students for their examination, encouraging them to compete with one another to score high mark and finally to get good and lucrative jobs. But things were not like this in the past. The students had respect to their teachers in spite of the punishments they used to get from them. There was close and friendly relation between the teachers and students. In my opinion teachers should not teach the students only to make them pass the examinations. Importance should be given for the acquisition of knowledge. The education should aim at all-round development of the students. This should be the primary aim of education."</p>
+        
+                </div>
+                <div class="mt-10">
+                    <p class="text-orange-400 text-lg">– His Holiness Sri Sri Sri Eeshapriya Theertha Swamiji</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section id="mission" class="py-20 px-4 bg-gradient-to-b from-gray-900/50 to-black/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-20 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Our Guiding Principles</h2>
+            <div class="flex flex-col lg:flex-row gap-12 mission-vision">
+                <!-- Mission -->
+                <div class="flex-1 glass-card p-10 rounded-xl fade-in">
+                    <div class="flex items-center mb-8">
+                        <div class="w-16 h-16 rounded-full bg-orange-500 bg-opacity-20 flex items-center justify-center mr-6 glow-orange">
+                            <i class="fas fa-bullseye text-orange-500 text-2xl"></i>
+                        </div>
+                        
+                        <h3 class="text-3xl font-bold" style="font-family: 'Orbitron', monospace;">Our Mission</h3>
+                    </div>
+                    <div class="space-y-6 text-gray-300">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-orange-500 flex-shrink-0 mt-1 mr-4 flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            
+                            <p class="flex items-start">Delivering a rigorous academic curriculum that fosters intellectual curiosity, creativity and academic excellence,</p>
+                            </div>
+                            <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-orange-500 flex-shrink-0 mt-1 mr-4 flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            
+                            <p class="text-lg">Providing a supportive learning environment that promotes empathy and encourages respect for all,</p>
+                            
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-orange-500 flex-shrink-0 mt-1 mr-4 flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            
+                            <p class="text-lg">Encouraging active student participation in extracurricular activities and sports that promote personal growth, leadership, and teamwork, and</p>
+                            
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-orange-500 flex-shrink-0 mt-1 mr-4 flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            
+                            <p class="text-lg">Cultivating a deep appreciation for Indian culture and tradition while preparing our students to thrive in a rapidly changing and interconnected world.</p>
+                        
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <!-- Vision -->
+                <div class="flex-1 glass-card p-10 rounded-xl fade-in">
+                    <div class="flex items-center mb-8">
+                        <div class="w-16 h-16 rounded-full bg-maroon-600 bg-opacity-20 flex items-center justify-center mr-6 glow-maroon">
+                            <i class="fas fa-eye text-maroon-400 text-2xl"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold" style="font-family: 'Orbitron', monospace;">Our Vision</h3>
+                    </div>
+                    <div class="flex items-center mb-8">
+
+                    </div>
+                    <div class="space-y-6 text-gray-300">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-maroon-600 flex-shrink-0 mt-1 mr-4 flex items-center justify-center">
+                                <i class="fas fa-star text-white text-sm"></i>
+                            </div>
+                            <p class="text-lg">To be a leading institution in the region that provides students with an enriching and empowering educational experience by inspiring and enabling our students to become life long learners and responsible citizens who make a positive impact on society. </p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historical Timeline -->
+    <section id="timeline" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-20 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Our Sacred Journey</h2>
+            <p class="text-center mb-16 max-w-4xl mx-auto text-gray-300 text-xl fade-in">
+                From humble beginnings in 1921 to a nationwide network of 30+ institutions, our journey has been blessed with divine grace and the dedication of countless souls.
+            </p>
+            
+            <div class="timeline-container relative">
+                <div class="flex overflow-x-auto pb-8 timeline-scroll" style="scrollbar-width: none;">
+                    <div class="flex space-x-16 px-4">
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1921</div>
+                                <div class="text-lg text-gray-400 mt-2">SBVP Higher Primary School, Padubidri</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1950</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Kannada Medium High School, Admar</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1960</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna College, Udupi</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1962</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC Dahisar, Mumbai</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1966</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Evening College, Udupi</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1968</div>
+                                <div class="text-lg text-gray-400 mt-2">Padubidri Ganapathi High School, Padubidri</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1968</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Nursery, Primary, High School</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1969</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Primary School, Sadashivanagar</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1969</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna High School, Sadashivanagar</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1971</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Nursery & Primary School (Marathi)</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1972</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna PU College, Admar</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1978</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Nursery & Primary Schoo, Aldur</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1978</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna High School, Sangameshwarpet</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1980</div>
+                                <div class="text-lg text-gray-400 mt-2">Rotary Poornaprajna Primary & High School, Belur</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1982</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC Bharavathi, Nursery</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1982</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC Yelahanka, Primary School</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1984</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC Bhadravathi, Primary</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1984</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC Indiranagar</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1988</div>
+                                <div class="text-lg text-gray-400 mt-2">Widia Poornaprajna</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1987</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC, New Delhi</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1990</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Marathi, Secondary School, Dahisar, Mumbai</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1991</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC Yelahanka, High School</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1991</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC High School, Bhadravathi</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1992</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Nursery 7 Primary, Sangameshwarpet</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">1998</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Institute of Scientific Research, Banglore</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">2001</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC Krishnanagar</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">2001</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna PU College, Udupi</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">2006</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Institute of Management, Udupi</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">2007</div>
+                                <div class="text-lg text-gray-400 mt-2">PPEC high School, Admar</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item fade-in" style="min-width: 150px;">
+                            <div class="timeline-marker mb-4"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-2xl" style="font-family: 'Orbitron', monospace;">2009</div>
+                                <div class="text-lg text-gray-400 mt-2">Poornaprajna Institute of Faculty Improvement, Banglore</div>
+                            </div>
+                            <div class="absolute top-16 left-1/2 transform -translate-x-1/2 w-1 h-20 bg-gradient-to-b from-orange-500 to-transparent"></div>
+                        </div>
+                        
+                       
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Content -->
+                <div class="glass-card p-10 mt-16 fade-in">
+                    <div class="flex flex-col lg:flex-row">
+                        <div class="lg:w-1/3 mb-8 lg:mb-0">
+                            <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
+                                 alt="Historical Photo" class="w-full h-64 object-cover rounded-lg">
+                        </div>
+                        <div class="lg:w-2/3 lg:pl-10">
+                            <h3 class="text-3xl font-bold mb-6" style="font-family: 'Orbitron', monospace;">1950: The Humble Beginnings</h3>
+                            <p class="text-gray-300 text-lg leading-relaxed">
+                                Founded by Swamiji in a small village with just a thatched hut and a vision, USAMEC began as a spiritual center offering free education to local children. The first students were taught under a banyan tree, with lessons combining traditional scriptures with modern subjects. This humble beginning laid the foundation for what would become a nationwide network of educational and spiritual institutions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Institutions Hub (Replaced with React Roulette Explorer) -->
+    <section id="institutions" class="py-20 px-4 bg-gradient-to-b from-black/50 to-gray-900/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-8 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Our Institutions</h2>
+            <p class="text-center mb-10 max-w-4xl mx-auto text-gray-300 text-xl fade-in">
+                Click any segment to explore institution details.
+            </p>
+            <div id="institutions-roulette-root" class="mt-6"></div>
+        </div>
+    </section>
+
+    <!-- Achievements & Milestones -->
+    <section class="py-20 px-4 bg-gradient-to-r from-orange-900/30 to-maroon-900/30">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-20 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Our Impact</h2>
+            
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-12">
+                <!-- Counter -->
+                <div class="text-center fade-in">
+                    <div class="text-6xl font-bold mb-4 counter" data-target="72">0</div>
+                    <div class="text-xl text-gray-300">Years of Service</div>
+                </div>
+                
+                <!-- Counter -->
+                <div class="text-center fade-in">
+                    <div class="text-6xl font-bold mb-4 counter" data-target="32">0</div>
+                    <div class="text-xl text-gray-300">Institutions</div>
+                </div>
+                
+                <!-- Counter -->
+                <div class="text-center fade-in">
+                    <div class="text-6xl font-bold mb-4 counter" data-target="50000">0</div>
+                    <div class="text-xl text-gray-300">Students Educated</div>
+                </div>
+                
+                <!-- Counter -->
+                <div class="text-center fade-in">
+                    <div class="text-6xl font-bold mb-4 counter" data-target="1000+">0</div>
+                    <div class="text-xl text-gray-300">Scholarships Yearly</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Gallery -->
+    <section class="py-20 px-4 bg-black/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-8 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Divine Moments</h2>
+            <p class="text-center mb-16 max-w-4xl mx-auto text-gray-300 text-xl fade-in">
+                Glimpses of our spiritual and educational journey through the years
+            </p>
+            
+            <div class="flex justify-center mb-12 fade-in">
+                <button class="px-8 py-3 rounded-l-full bg-orange-500 text-white font-semibold text-lg">Photos</button>
+                <button class="px-8 py-3 rounded-r-full bg-gray-800 text-gray-300 font-semibold hover:bg-gray-700 text-lg">Videos</button>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-56">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 gallery-overlay flex items-center justify-center">
+                        <i class="fas fa-search text-white text-3xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-56">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1422&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 gallery-overlay flex items-center justify-center">
+                        <i class="fas fa-search text-white text-3xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-56">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 gallery-overlay flex items-center justify-center">
+                        <i class="fas fa-search text-white text-3xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-56">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 gallery-overlay flex items-center justify-center">
+                        <i class="fas fa-search text-white text-3xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-56">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 gallery-overlay flex items-center justify-center">
+                        <i class="fas fa-search text-white text-3xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-56">
+                    <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 gallery-overlay flex items-center justify-center">
+                        <i class="fas fa-search text-white text-3xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-56">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 gallery-overlay flex items-center justify-center">
+                        <i class="fas fa-search text-white text-3xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-56">
+                    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 gallery-overlay flex items-center justify-center">
+                        <i class="fas fa-search text-white text-3xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16 fade-in">
+                <button class="border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-full font-semibold transition-all duration-300 text-lg">
+                    View Full Gallery
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Map -->
+    <section class="py-20 px-4 bg-gradient-to-b from-gray-900/50 to-black/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-8 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Our Presence Across India</h2>
+            <p class="text-center mb-16 max-w-4xl mx-auto text-gray-300 text-xl fade-in">
+                32 institutions serving communities in 12 states
+            </p>
+            
+            <div class="glass-card p-8 rounded-xl fade-in">
+                <div class="relative h-96">
+                    <!-- Simplified India Map with Pins -->
+                    <div class="absolute inset-0 bg-gray-800/50 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                        <div class="relative w-full h-full">
+                            <!-- This would be replaced with an actual SVG map in production -->
+                            <div class="absolute" style="top: 20%; left: 30%;">
+                                <div class="map-pin" data-institution="Divine Light Gurukul"></div>
+                            </div>
+                            <div class="absolute" style="top: 40%; left: 50%;">
+                                <div class="map-pin" data-institution="Divine Light College"></div>
+                            </div>
+                            <div class="absolute" style="top: 30%; left: 70%;">
+                                <div class="map-pin" data-institution="Divine Light Ashram"></div>
+                            </div>
+                            <!-- More pins would be added for all institutions -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-lg">
+                        <h3 class="text-orange-400 font-semibold text-xl mb-2" style="font-family: 'Orbitron', monospace;">Northern Region</h3>
+                        <p class="text-gray-300">8 institutions across Uttar Pradesh, Uttarakhand, Delhi</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-lg">
+                        <h3 class="text-orange-400 font-semibold text-xl mb-2" style="font-family: 'Orbitron', monospace;">Southern Region</h3>
+                        <p class="text-gray-300">12 institutions across Karnataka, Tamil Nadu, Kerala</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-lg">
+                        <h3 class="text-orange-400 font-semibold text-xl mb-2" style="font-family: 'Orbitron', monospace;">Western Region</h3>
+                        <p class="text-gray-300">6 institutions across Maharashtra, Gujarat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-black/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-20 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Connect With Us</h2>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Contact Form -->
+                <div class="lg:w-1/2 glass-card p-10 rounded-xl fade-in">
+                    <h3 class="text-3xl font-bold mb-8" style="font-family: 'Orbitron', monospace;">Send Your Message</h3>
+                    <form>
+                        <div class="mb-8">
+                            <label for="name" class="block text-gray-300 mb-3 text-lg">Your Name</label>
+                            <input type="text" id="name" class="w-full futuristic-input">
+                        </div>
+                        <div class="mb-8">
+                            <label for="email" class="block text-gray-300 mb-3 text-lg">Email Address</label>
+                            <input type="email" id="email" class="w-full futuristic-input">
+                        </div>
+                        <div class="mb-8">
+                            <label for="message" class="block text-gray-300 mb-3 text-lg">Your Message</label>
+                            <textarea id="message" rows="5" class="w-full futuristic-input"></textarea>
+                        </div>
+                        <button type="submit" class="futuristic-btn w-full text-white text-lg">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="lg:w-1/2 glass-card p-10 rounded-xl fade-in">
+                    <h3 class="text-3xl font-bold mb-8" style="font-family: 'Orbitron', monospace;">Contact Information</h3>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-orange-500 bg-opacity-20 flex items-center justify-center mr-6 mt-1 glow-orange">
+                                <i class="fas fa-map-marker-alt text-orange-500 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2">Headquarters</h4>
+                                <p class="text-gray-400 text-lg">USAMEC,<br>Gurukul Road, Varanasi,<br>Uttar Pradesh - 221005, India</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-orange-500 bg-opacity-20 flex items-center justify-center mr-6 mt-1 glow-orange">
+                                <i class="fas fa-phone-alt text-orange-500 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2">Phone</h4>
+                                <p class="text-gray-400 text-lg">+91 542 1234567<br>+91 98765 43210</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-orange-500 bg-opacity-20 flex items-center justify-center mr-6 mt-1 glow-orange">
+                                <i class="fas fa-envelope text-orange-500 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2">Email</h4>
+                                <p class="text-gray-400 text-lg">contact@divinelightmatha.org<br>info@divinelightmatha.org</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <h4 class="font-semibold text-xl mb-6">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-orange-500 flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-facebook-f text-white text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-orange-500 flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-twitter text-white text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-orange-500 flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-instagram text-white text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-orange-500 flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-youtube text-white text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 h-56 rounded-lg overflow-hidden">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28821.034558728!2d82.9739144!3d25.3176452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e2db76febcf4d%3A0x68131710053abb2!2sVaranasi%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1689154288565!5m2!1sen!2sin" 
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 px-4 bg-gray-900/80">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row justify-between items-start">
+                <div class="mb-10 lg:mb-0">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <img src="./src/assets/LOGO.jpeg" alt="USAMEC Logo" class="w-12 h-12 rounded-full object-cover glow-orange" />
+                        <span class="text-2xl font-bold text-white" style="font-family: 'Orbitron', monospace;">USAMEC</span>
+                    </div>
+                    <p class="text-gray-400 max-w-md text-lg">A spiritual organization dedicated to education and enlightenment since 1950.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+                    <div>
+                        <h4 class="text-white font-semibold mb-6 text-xl" style="font-family: 'Orbitron', monospace;">Quick Links</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">Home</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">About Us</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">Institutions</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">Donate</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-white font-semibold mb-6 text-xl" style="font-family: 'Orbitron', monospace;">Resources</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">Publications</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">Media</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">Blog</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">FAQs</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-white font-semibold mb-6 text-xl" style="font-family: 'Orbitron', monospace;">Legal</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">Terms of Service</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300 text-lg">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-16 pt-10 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-6 md:mb-0 text-lg">© 2023 USAMEC. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-orange-400 transition-colors duration-300 text-xl"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-orange-400 transition-colors duration-300 text-xl"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-orange-400 transition-colors duration-300 text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-orange-400 transition-colors duration-300 text-xl"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- React Roulette Mounting Script -->
+    <script type="module">
+        import { createRoot } from 'https://esm.sh/react-dom@18/client';
+        import React from 'https://esm.sh/react@18';
+        import InstitutionsRoulette from './src/components/InstitutionsRoulette.tsx';
+        import { institutions } from './src/data/institutions.ts';
+
+        const mountPoint = document.getElementById('institutions-roulette-root');
+        if (mountPoint) {
+            try {
+                const root = createRoot(mountPoint);
+                root.render(React.createElement(InstitutionsRoulette, { institutions }));
+            } catch (error) {
+                console.error('Failed to mount React roulette:', error);
+                // Fallback will be attempted by the next script
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { institutions } from './src/data/institutions.ts';
+        import mountInstitutionsRoulette from './src/components/institutions-roulette.js';
+        const mountPoint = document.getElementById('institutions-roulette-root');
+        if (mountPoint && mountPoint.childNodes.length === 0) {
+            try {
+                mountInstitutionsRoulette(mountPoint, institutions);
+            } catch (e) {
+                console.error('Fallback roulette failed:', e);
+                mountPoint.innerHTML = '<div class="text-center text-gray-400">Unable to load institutions explorer.</div>';
+            }
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating particles for hero section
+            function createParticles() {
+                const particlesContainer = document.querySelector('.hero-particles');
+                const particleCount = 50;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            createParticles();
+            
+            // Enhanced scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all animated elements
+            document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Enhanced counter animation with easing
+            function animateCounters() {
+                const counters = document.querySelectorAll('.counter');
+                
+                counters.forEach(counter => {
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000; // 2 seconds
+                    const start = performance.now();
+                    
+                    function updateCounter(currentTime) {
+                        const elapsed = currentTime - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        
+                        // Easing function (ease-out)
+                        const easeOut = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.floor(target * easeOut);
+                        
+                        counter.textContent = current.toLocaleString();
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target.toLocaleString();
+                        }
+                    }
+                    
+                    requestAnimationFrame(updateCounter);
+                });
+            }
+            
+            // Start counters when section is visible
+            const counterSection = document.querySelector('.bg-gradient-to-r');
+            const counterObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    animateCounters();
+                    counterObserver.unobserve(entries[0].target);
+                }
+            });
+            
+            if (counterSection) {
+                counterObserver.observe(counterSection);
+            }
+            
+            // Enhanced smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        const offsetTop = targetElement.offsetTop - 100;
+                        
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update active nav link
+                        updateActiveNavLink(targetId);
+                    }
+                });
+            });
+            
+            function updateActiveNavLink(activeId) {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === activeId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            // Enhanced scroll-based nav highlighting
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            function highlightNavOnScroll() {
+                const scrollPos = window.scrollY + 150;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // Throttled scroll event
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                if (scrollTimeout) {
+                    clearTimeout(scrollTimeout);
+                }
+                scrollTimeout = setTimeout(highlightNavOnScroll, 10);
+            });
+            
+            // Enhanced map pin interactions
+            document.querySelectorAll('.map-pin').forEach(pin => {
+                pin.addEventListener('mouseenter', function() {
+                    const institutionName = this.getAttribute('data-institution');
+                    // Create tooltip (simplified for demo)
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'absolute bg-black text-white p-2 rounded text-sm z-10';
+                    tooltip.style.bottom = '30px';
+                    tooltip.style.left = '50%';
+                    tooltip.style.transform = 'translateX(-50%)';
+                    tooltip.textContent = institutionName;
+                    this.appendChild(tooltip);
+                });
+                
+                pin.addEventListener('mouseleave', function() {
+                    const tooltip = this.querySelector('div');
+                    if (tooltip) {
+                        tooltip.remove();
+                    }
+                });
+            });
+            
+            // Form enhancements
+            document.querySelectorAll('.futuristic-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.transform = 'scale(1.02)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Timeline animation on scroll
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const timelineObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            timelineItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'all 0.6s ease';
+                timelineObserver.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>

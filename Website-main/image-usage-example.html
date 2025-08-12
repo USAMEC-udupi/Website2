@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Configuration Usage Example</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">Image Configuration Usage Example</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">How to Use the Image Configuration</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <h3 class="font-medium text-gray-800">1. Import the image configuration:</h3>
+                    <pre class="bg-gray-100 p-3 rounded text-sm"><code>import { images, getImage } from './src/images.js';</code></pre>
+                </div>
+                
+                <div>
+                    <h3 class="font-medium text-gray-800">2. Use images directly:</h3>
+                    <pre class="bg-gray-100 p-3 rounded text-sm"><code>&lt;img src="${images.hero.main}" alt="Hero Image"&gt;</code></pre>
+                </div>
+                
+                <div>
+                    <h3 class="font-medium text-gray-800">3. Use the helper function:</h3>
+                    <pre class="bg-gray-100 p-3 rounded text-sm"><code>&lt;img src="${getImage('hero', 'main')}" alt="Hero Image"&gt;</code></pre>
+                </div>
+                
+                <div>
+                    <h3 class="font-medium text-gray-800">4. Update an image dynamically:</h3>
+                    <pre class="bg-gray-100 p-3 rounded text-sm"><code>updateImage('hero', 'main', 'new-image-url.jpg');</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Hero Section Example -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <h3 class="p-4 font-semibold bg-blue-100">Hero Section</h3>
+                <img id="hero-main" src="" alt="Hero Main" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <p class="text-sm text-gray-600">Main hero image</p>
+                    <button onclick="changeHeroImage()" class="mt-2 bg-blue-500 text-white px-3 py-1 rounded text-sm">
+                        Change Image
+                    </button>
+                </div>
+            </div>
+
+            <!-- About Section Example -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <h3 class="p-4 font-semibold bg-green-100">About Section</h3>
+                <img id="about-main" src="" alt="About Main" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <p class="text-sm text-gray-600">Main about image</p>
+                    <button onclick="changeAboutImage()" class="mt-2 bg-green-500 text-white px-3 py-1 rounded text-sm">
+                        Change Image
+                    </button>
+                </div>
+            </div>
+
+            <!-- Team Section Example -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <h3 class="p-4 font-semibold bg-purple-100">Team Section</h3>
+                <img id="team-member1" src="" alt="Team Member 1" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <p class="text-sm text-gray-600">Team member 1</p>
+                    <button onclick="changeTeamImage()" class="mt-2 bg-purple-500 text-white px-3 py-1 rounded text-sm">
+                        Change Image
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Available Image Sections</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="font-medium text-gray-800">Hero Section:</h3>
+                    <ul class="text-sm text-gray-600 ml-4">
+                        <li>• main</li>
+                        <li>• signature</li>
+                        <li>• secondary</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-800">About Section:</h3>
+                    <ul class="text-sm text-gray-600 ml-4">
+                        <li>• main</li>
+                        <li>• secondary</li>
+                        <li>• tertiary</li>
+                        <li>• quaternary</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-800">Team Section:</h3>
+                    <ul class="text-sm text-gray-600 ml-4">
+                        <li>• member1 - member8</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-800">Placeholders:</h3>
+                    <ul class="text-sm text-gray-600 ml-4">
+                        <li>• signature</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the image configuration
+        import { images, getImage, updateImage } from './src/images.js';
+
+        // Set initial images
+        document.getElementById('hero-main').src = images.hero.main;
+        document.getElementById('about-main').src = images.about.main;
+        document.getElementById('team-member1').src = images.team.member1;
+
+        // Make functions globally available for buttons
+        window.changeHeroImage = function() {
+            const newUrl = prompt('Enter new hero image URL:');
+            if (newUrl) {
+                updateImage('hero', 'main', newUrl);
+                document.getElementById('hero-main').src = newUrl;
+            }
+        };
+
+        window.changeAboutImage = function() {
+            const newUrl = prompt('Enter new about image URL:');
+            if (newUrl) {
+                updateImage('about', 'main', newUrl);
+                document.getElementById('about-main').src = newUrl;
+            }
+        };
+
+        window.changeTeamImage = function() {
+            const newUrl = prompt('Enter new team image URL:');
+            if (newUrl) {
+                updateImage('team', 'member1', newUrl);
+                document.getElementById('team-member1').src = newUrl;
+            }
+        };
+    </script>
+</body>
+</html> 

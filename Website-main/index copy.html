@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USAMEC - Spiritual Organization</title>
+    <link rel="icon" type="image/png" href="./src/assets/LOGO.jpeg">
+    <link rel="apple-touch-icon" href="./src/assets/LOGO.jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        :root {
+            --primary: #FF7A00;
+            --secondary: #800000;
+            --accent: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .glow-orange {
+            box-shadow: 0 0 15px rgba(255, 122, 0, 0.7);
+        }
+        
+        .glow-maroon {
+            box-shadow: 0 0 15px rgba(128, 0, 0, 0.7);
+        }
+        
+        .particles-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 122, 0, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 30%, rgba(128, 0, 0, 0.1) 0%, transparent 50%);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-marker {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .timeline-marker::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 122, 0, 0.3);
+            top: -8px;
+            left: -8px;
+            z-index: 1;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+        
+        .institution-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 122, 0, 0.4);
+        }
+        
+        .map-pin {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .map-pin::after {
+            content: '';
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 122, 0, 0.3);
+            top: -8px;
+            left: -8px;
+            z-index: 1;
+            animation: pulse 2s infinite;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .leadership-cards {
+                flex-direction: column;
+            }
+            
+            .mission-vision {
+                flex-direction: column;
+            }
+            
+            .timeline-container {
+                overflow-x: auto;
+                padding-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-black bg-opacity-70 backdrop-filter backdrop-blur-lg py-4 px-6 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="./src/assets/LOGO.jpeg" alt="USAMEC Logo" class="w-10 h-10 rounded-full object-cover shadow" />
+                <span class="text-xl font-bold text-white">USAMEC</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-white hover:text-orange-400 transition-colors duration-300 nav-link">Home</a>
+                <a href="#leadership" class="text-white hover:text-orange-400 transition-colors duration-300 nav-link">Leadership</a>
+                <a href="#mission" class="text-white hover:text-orange-400 transition-colors duration-300 nav-link">Mission</a>
+                <a href="#timeline" class="text-white hover:text-orange-400 transition-colors duration-300 nav-link">History</a>
+                <a href="#institutions" class="text-white hover:text-orange-400 transition-colors duration-300 nav-link">Institutions</a>
+                <a href="#contact" class="text-white hover:text-orange-400 transition-colors duration-300 nav-link">Contact</a>
+            </div>
+            <button class="md:hidden text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="particles-bg"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="text-center z-10 px-4 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white" style="text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                Udupi Shree Adamaru Matha Education Council
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 text-white opacity-90">
+                Illuminating lives through spiritual wisdom and educational excellence since 1921
+            </p>
+            <button class="bg-gradient-to-r from-orange-500 to-orange-700 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-orange-600 hover:to-orange-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                Explore Our Institutions
+            </button>
+        </div>
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+            <a href="#leadership" class="text-white animate-bounce">
+                <i class="fas fa-chevron-down text-3xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Leadership Messages -->
+    <section id="leadership" class="py-20 px-4 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-16 fade-in">USAMEC</h2>
+        <div class="flex flex-col md:flex-row gap-8 leadership-cards">
+            <!-- Founder Card -->
+            <div class="flex-1 glass-card p-8 rounded-xl fade-in">
+                <div class="flex flex-col md:flex-row items-center mb-6">
+                    <div class="relative mb-6 md:mb-0 md:mr-6">
+                        <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-orange-500 glow-orange">
+                            <img id="founder" src="./src/assets/founder.jpg" alt="Founder Swamiji" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Founder Swamiji</h3>
+                        <p class="text-orange-400">USAMEC (19---19--)</p>
+                    </div>
+                </div>
+                <div class="text-gray-300 mb-6">
+                    <p class="mb-4">"Schools, Colleges and Universities are student-centered activities. These exist to shape Nation’s young ones physically and spiritually. Shapers are to be selected very carefully. They have to have the required competence, dedication, and patriotism. A Nation’s future can be shaped only through shaping the young ones of the Nation. Spiritual, mental, and physical aspects of human beings shall be treated with equanimity and understanding."</p>
+                    <p>"Poornaprajna Institutions are trying to perform this duty towards the Nation. In all Poornaprajna Institutions, students are treated as Nation’s children and God’s children. Hence, all possible efforts are made to see that they get necessary training and guidance."</p>
+                </div>
+                <div class="mt-8">
+                    
+                </div>
+            </div>
+            
+            <!-- President Card -->
+            <div class="flex-1 glass-card p-8 rounded-xl fade-in">
+                <div class="flex flex-col md:flex-row items-center mb-6">
+                    <div class="relative mb-6 md:mb-0 md:mr-6">
+                        <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-maroon-600 glow-maroon">
+                            <img id="president-photo" src="./src/assets/swami.jpg" alt="President Swamiji" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">President Swamiji</h3>
+                        <p class="text-maroon-300">USAMEC (2005-Present)</p>
+                    </div>
+                </div>
+                <div class="text-gray-300 mb-6">
+                    <p class="mb-4">"In this digital age, our mission remains timeless - to provide education that transforms lives while preserving our spiritual heritage. We are expanding our reach through technology without compromising our core values."</p>
+                    <p>"The 32 institutions under our care are not just schools and ashrams; they are beacons of hope for thousands. With divine grace, we will continue this sacred work for generations to come."</p>
+                </div>
+                <div class="mt-8">
+                    <img src="https://via.placeholder.com/150x50?text=Signature" alt="Signature" class="h-12">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section id="mission" class="py-20 px-4 bg-gradient-to-b from-gray-900 to-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16 fade-in">Our Guiding Principles</h2>
+            <div class="flex flex-col md:flex-row gap-8 mission-vision">
+                <!-- Mission -->
+                <div class="flex-1 glass-card p-8 rounded-xl fade-in">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-orange-500 bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-bullseye text-orange-500 text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Our Mission</h3>
+                    </div>
+                    <div class="space-y-4 text-gray-300">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-orange-500 flex-shrink-0 mt-1 mr-3 flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <p>To provide holistic education that combines academic excellence with spiritual growth.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-orange-500 flex-shrink-0 mt-1 mr-3 flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <p>To preserve and propagate India's ancient spiritual wisdom through modern educational institutions.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-orange-500 flex-shrink-0 mt-1 mr-3 flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <p>To serve underprivileged communities through educational and humanitarian initiatives.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-orange-500 flex-shrink-0 mt-1 mr-3 flex items-center justify-center">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <p>To create leaders who embody both professional competence and spiritual awareness.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <script type="module">
+                    import { images } from './src/images.js';
+                    const el = document.getElementById('president-photo');
+                    if (el) {
+                        el.src = images.leaders.president;
+                    }
+                </script>
+                <!-- Vision -->
+                <div class="flex-1 glass-card p-8 rounded-xl fade-in">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-maroon-600 bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-eye text-maroon-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Our Vision</h3>
+                    </div>
+                    <div class="space-y-4 text-gray-300">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-maroon-600 flex-shrink-0 mt-1 mr-3 flex items-center justify-center">
+                                <i class="fas fa-star text-white text-xs"></i>
+                            </div>
+                            <p>A world where education enlightens the mind and elevates the spirit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historical Timeline -->
+    <section id="timeline" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16 fade-in">Our Sacred Journey</h2>
+            <p class="text-center mb-12 max-w-3xl mx-auto text-gray-300 fade-in">
+                From humble beginnings in 1950 to a nationwide network of 32+ institutions, our journey has been blessed with divine grace and the dedication of countless souls.
+            </p>
+            
+            <div class="timeline-container relative">
+                <div class="flex overflow-x-auto pb-8 timeline-scroll" style="scrollbar-width: none;">
+                    <div class="flex space-x-12 px-4">
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1921</div>
+                                <div class="text-sm text-gray-400 mt-1">SBVP Higher Primary School, Padubidri</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1955</div>
+                                <div class="text-sm text-gray-400 mt-1">First School</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1962</div>
+                                <div class="text-sm text-gray-400 mt-1">Ashram Built</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1971</div>
+                                <div class="text-sm text-gray-400 mt-1">College</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1985</div>
+                                <div class="text-sm text-gray-400 mt-1">New Leadership</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1995</div>
+                                <div class="text-sm text-gray-400 mt-1">10 Institutions</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">2005</div>
+                                <div class="text-sm text-gray-400 mt-1">Current President</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">1950</div>
+                                <div class="text-sm text-gray-400 mt-1">Foundation</div>
+                            </div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-orange-500"></div>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="flex flex-col items-center timeline-item" style="min-width: 120px;">
+                            <div class="timeline-marker mb-2"></div>
+                            <div class="text-center">
+                                <div class="text-orange-400 font-bold text-lg">2009</div>
+                                <div class="text-sm text-gray-400 mt-1">32 Institutions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Content -->
+                <div class="glass-card p-8 mt-12 fade-in">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-1/3 mb-6 md:mb-0">
+                            <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
+                                 alt="Historical Photo" class="w-full h-48 object-cover rounded-lg">
+                        </div>
+                        <div class="md:w-2/3 md:pl-8">
+                            <h3 class="text-2xl font-bold mb-4">1950: The Humble Beginnings</h3>
+                            <p class="text-gray-300">
+                                Founded by Swamiji in a small village with just a thatched hut and a vision, USAMEC began as a spiritual center offering free education to local children. The first students were taught under a banyan tree, with lessons combining traditional scriptures with modern subjects. This humble beginning laid the foundation for what would become a nationwide network of educational and spiritual institutions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Institutions Hub -->
+    <section id="institutions" class="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 fade-in">Our Institutions</h2>
+            <p class="text-center mb-12 max-w-3xl mx-auto text-gray-300 fade-in">
+                32+ institutions across India serving diverse communities through education and spiritual guidance
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Institution Card -->
+                <div class="glass-card rounded-xl overflow-hidden transition-all duration-500 hover:transform hover:-translate-y-2 institution-card fade-in">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="School" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Divine Light Gurukul</h3>
+                        <p class="text-gray-400 mb-4">Established: 1955 | Varanasi, UP</p>
+                        <p class="text-gray-300 text-sm">Our first residential school combining modern education with traditional gurukul values. Offers CBSE curriculum with special emphasis on Sanskrit and Indian philosophy.</p>
+                        <button class="mt-4 text-orange-500 hover:text-orange-400 text-sm font-semibold transition-colors duration-300">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Institution Card -->
+                <div class="glass-card rounded-xl overflow-hidden transition-all duration-500 hover:transform hover:-translate-y-2 institution-card fade-in">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="College" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Divine Light College</h3>
+                        <p class="text-gray-400 mb-4">Established: 1971 | Bangalore, KA</p>
+                        <p class="text-gray-300 text-sm">Premier degree college offering Arts, Science and Commerce programs with value-added courses in meditation and yoga. NAAC 'A' Grade accredited institution.</p>
+                        <button class="mt-4 text-orange-500 hover:text-orange-400 text-sm font-semibold transition-colors duration-300">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Institution Card -->
+                <div class="glass-card rounded-xl overflow-hidden transition-all duration-500 hover:transform hover:-translate-y-2 institution-card fade-in">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1588072432904-843af37f03ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
+                             alt="Ashram" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Divine Light Ashram</h3>
+                        <p class="text-gray-400 mb-4">Established: 1962 | Rishikesh, UK</p>
+                        <p class="text-gray-300 text-sm">Spiritual retreat center offering courses in meditation, yoga and vedic studies. Hosts annual international spiritual conference attracting seekers worldwide.</p>
+                        <button class="mt-4 text-orange-500 hover:text-orange-400 text-sm font-semibold transition-colors duration-300">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 fade-in">
+                <button class="border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-6 py-3 rounded-full font-semibold transition-colors duration-300">
+                    View All 32 Institutions
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements & Milestones -->
+    <section class="py-20 px-4 bg-gradient-to-r from-orange-900 to-maroon-900">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16 fade-in">Our Impact</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Counter -->
+                <div class="text-center fade-in">
+                    <div class="text-5xl font-bold mb-2 counter" data-target="72">0</div>
+                    <div class="text-lg">Years of Service</div>
+                </div>
+                
+                <!-- Counter -->
+                <div class="text-center fade-in">
+                    <div class="text-5xl font-bold mb-2 counter" data-target="32">0</div>
+                    <div class="text-lg">Institutions</div>
+                </div>
+                
+                <!-- Counter -->
+                <div class="text-center fade-in">
+                    <div class="text-5xl font-bold mb-2 counter" data-target="50000">0</div>
+                    <div class="text-lg">Students Educated</div>
+                </div>
+                
+                <!-- Counter -->
+                <div class="text-center fade-in">
+                    <div class="text-5xl font-bold mb-2 counter" data-target="1000+">0</div>
+                    <div class="text-lg">Scholarships Yearly</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Gallery -->
+    <section class="py-20 px-4 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 fade-in">Divine Moments</h2>
+            <p class="text-center mb-12 max-w-3xl mx-auto text-gray-300 fade-in">
+                Glimpses of our spiritual and educational journey through the years
+            </p>
+            
+            <div class="flex justify-center mb-8 fade-in">
+                <button class="px-6 py-2 rounded-l-full bg-orange-500 text-white font-semibold">Photos</button>
+                <button class="px-6 py-2 rounded-r-full bg-gray-800 text-gray-300 font-semibold hover:bg-gray-700">Videos</button>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-48">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center gallery-overlay">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-48">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1422&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center gallery-overlay">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-48">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center gallery-overlay">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-48">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center gallery-overlay">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-48">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center gallery-overlay">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-48">
+                    <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center gallery-overlay">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-48">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center gallery-overlay">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item -->
+                <div class="relative overflow-hidden rounded-lg gallery-item h-48">
+                    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
+                         alt="Gallery" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center gallery-overlay">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 fade-in">
+                <button class="border border-white text-white hover:bg-white hover:text-black px-6 py-3 rounded-full font-semibold transition-colors duration-300">
+                    View Full Gallery
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Map -->
+    <section class="py-20 px-4 bg-gradient-to-b from-gray-900 to-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 fade-in">Our Presence Across India</h2>
+            <p class="text-center mb-12 max-w-3xl mx-auto text-gray-300 fade-in">
+                32 institutions serving communities in 12 states
+            </p>
+            
+            <div class="glass-card p-6 rounded-xl fade-in">
+                <div class="relative h-96">
+                    <!-- Simplified India Map with Pins -->
+                    <div class="absolute inset-0 bg-gray-800 rounded-lg flex items-center justify-center">
+                        <div class="relative w-full h-full">
+                            <!-- This would be replaced with an actual SVG map in production -->
+                            <div class="absolute" style="top: 20%; left: 30%;">
+                                <div class="map-pin" data-institution="Divine Light Gurukul"></div>
+                            </div>
+                            <div class="absolute" style="top: 40%; left: 50%;">
+                                <div class="map-pin" data-institution="Divine Light College"></div>
+                            </div>
+                            <div class="absolute" style="top: 30%; left: 70%;">
+                                <div class="map-pin" data-institution="Divine Light Ashram"></div>
+                            </div>
+                            <!-- More pins would be added for all institutions -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                        <h3 class="text-orange-400 font-semibold">Northern Region</h3>
+                        <p class="text-gray-300 text-sm">8 institutions across Uttar Pradesh, Uttarakhand, Delhi</p>
+                    </div>
+                    <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                        <h3 class="text-orange-400 font-semibold">Southern Region</h3>
+                        <p class="text-gray-300 text-sm">12 institutions across Karnataka, Tamil Nadu, Kerala</p>
+                    </div>
+                    <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                        <h3 class="text-orange-400 font-semibold">Western Region</h3>
+                        <p class="text-gray-300 text-sm">6 institutions across Maharashtra, Gujarat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16 fade-in">Connect With Us</h2>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Contact Form -->
+                <div class="lg:w-1/2 glass-card p-8 rounded-xl fade-in">
+                    <h3 class="text-2xl font-bold mb-6">Send Your Message</h3>
+                    <form>
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-300 mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-300 mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-300 mb-2">Your Message</label>
+                            <textarea id="message" rows="5" class="w-full bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                        </div>
+                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300 w-full">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="lg:w-1/2 glass-card p-8 rounded-xl fade-in">
+                    <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-orange-500 bg-opacity-20 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt text-orange-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">Headquarters</h4>
+                                <p class="text-gray-400">USAMEC <br>Gurukul Road, Varanasi,<br>Uttar Pradesh - 221005, India</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-orange-500 bg-opacity-20 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-phone-alt text-orange-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">Phone</h4>
+                                <p class="text-gray-400">+91 542 1234567<br>+91 98765 43210</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-orange-500 bg-opacity-20 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-envelope text-orange-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">Email</h4>
+                                <p class="text-gray-400">contact@divinelightmatha.org<br>info@divinelightmatha.org</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10">
+                        <h4 class="font-semibold text-lg mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-orange-500 flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-facebook-f text-white"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-orange-500 flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-twitter text-white"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-orange-500 flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-instagram text-white"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-orange-500 flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-youtube text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10 h-48 rounded-lg overflow-hidden">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28821.034558728!2d82.9739144!3d25.3176452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e2db76febcf4d%3A0x68131710053abb2!2sVaranasi%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1689154288565!5m2!1sen!2sin" 
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 bg-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2">
+                        <img src="./src/assets/LOGO.jpeg" alt="USAMEC Logo" class="w-10 h-10 rounded-full object-cover" />
+                        <span class="text-xl font-bold text-white">USAMEC</span>
+                    </div>
+                    <p class="text-gray-400 mt-2 max-w-md">A spiritual organization dedicated to education and enlightenment since 1921.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">Home</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">About Us</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">Institutions</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">Donate</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Resources</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">Publications</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">Media</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">Blog</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">FAQs</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">Terms of Service</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-300">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 USAMEC. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-orange-400 transition-colors duration-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-orange-400 transition-colors duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-orange-400 transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-orange-400 transition-colors duration-300"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/babel">
+        // This would be React code in a proper React application
+        // For this single HTML file demo, we'll use vanilla JS for interactivity
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElements.forEach(el => observer.observe(el));
+            
+            // Counter animation
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+            
+            function animateCounters() {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const increment = target / speed;
+                    
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(animateCounters, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                });
+            }
+            
+            // Start counters when section is visible
+            const counterSection = document.querySelector('.bg-gradient-to-r');
+            const counterObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    animateCounters();
+                }
+            });
+            
+            counterObserver.observe(counterSection);
+            
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('text-orange-400');
+                        link.classList.add('text-white');
+                    });
+                    
+                    this.classList.remove('text-white');
+                    this.classList.add('text-orange-400');
+                });
+            });
+            
+            // Highlight active nav link on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (pageYOffset >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('text-orange-400');
+                    link.classList.add('text-white');
+                    
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.remove('text-white');
+                        link.classList.add('text-orange-400');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
