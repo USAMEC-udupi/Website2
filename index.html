@@ -992,14 +992,14 @@
         </div>
     </section>
 
-    <!-- Institutions Hub (Replaced with React Roulette Explorer) -->
+    <!-- Institutions Hub -->
     <section id="institutions" class="py-20 px-4 bg-gradient-to-b from-black/50 to-gray-900/50">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-8 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Our Institutions</h2>
+            <!-- <h2 class="text-5xl font-bold text-center mb-8 fade-in" style="text-shadow: 0 0 20px rgba(255, 122, 0, 0.6);">Our Institutions</h2>
             <p class="text-center mb-10 max-w-4xl mx-auto text-gray-300 text-xl fade-in">
                 Click any segment to explore institution details.
-            </p>
-            <div id="institutions-roulette-root" class="mt-6"></div>
+            </p> -->
+            <div id="root" class="mt-6"></div>
         </div>
     </section>
 
@@ -1324,38 +1324,10 @@
         </div>
     </footer>
 
-    <!-- React Roulette Mounting Script -->
-    <script type="module">
-        import { createRoot } from 'https://esm.sh/react-dom@18/client';
-        import React from 'https://esm.sh/react@18';
-        import InstitutionsRoulette from './src/components/InstitutionsRoulette.tsx';
-        import { institutions } from './src/data/institutions.ts';
 
-        const mountPoint = document.getElementById('institutions-roulette-root');
-        if (mountPoint) {
-            try {
-                const root = createRoot(mountPoint);
-                root.render(React.createElement(InstitutionsRoulette, { institutions }));
-            } catch (error) {
-                console.error('Failed to mount React roulette:', error);
-                // Fallback will be attempted by the next script
-            }
-        }
-    </script>
 
-    <script type="module">
-        import { institutions } from './src/data/institutions.ts';
-        import mountInstitutionsRoulette from './src/components/institutions-roulette.js';
-        const mountPoint = document.getElementById('institutions-roulette-root');
-        if (mountPoint && mountPoint.childNodes.length === 0) {
-            try {
-                mountInstitutionsRoulette(mountPoint, institutions);
-            } catch (e) {
-                console.error('Fallback roulette failed:', e);
-                mountPoint.innerHTML = '<div class="text-center text-gray-400">Unable to load institutions explorer.</div>';
-            }
-        }
-    </script>
+    <!-- React App Script -->
+    <script type="module" src="./src/main.tsx"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

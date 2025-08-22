@@ -15,9 +15,9 @@ interface InstitutionDetailsProps {
 const InstitutionDetails: React.FC<InstitutionDetailsProps> = ({ institution }) => {
   if (!institution) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
-        <h3 className="text-xl font-bold text-red-900 mb-4">Select an Institution</h3>
-        <p className="text-gray-600">Click or hover over a segment on the wheel to view institution details.</p>
+      <div className="glass-card p-6 rounded-xl text-center">
+        <h3 className="text-xl font-bold text-orange-500 mb-4">Select an Institution</h3>
+        <p className="text-gray-300">Click or hover over a segment on the wheel to view institution details.</p>
       </div>
     );
   }
@@ -334,9 +334,9 @@ const InstitutionDetails: React.FC<InstitutionDetailsProps> = ({ institution }) 
   
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-8">
+    <div className="glass-card p-6 rounded-xl">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-red-900">{institution.name}</h2>
+        <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Orbitron, monospace' }}>{institution.name}</h2>
         {institution.available ? (
           <a
             href={institution.website}
@@ -348,23 +348,21 @@ const InstitutionDetails: React.FC<InstitutionDetailsProps> = ({ institution }) 
             <ExternalLink size={16} className="ml-2" />
           </a>
         ) : (
-          <span className="inline-flex items-center px-4 py-2 bg-gray-400 text-white rounded-lg">
+          <span className="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg">
             <Clock size={16} className="mr-2" />
             Coming Soon
           </span>
         )}
       </div>
 
-      <p className="text-gray-600 mb-6">{institutionInfo.description}</p>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <h4 className="font-bold text-red-900 mb-2">Established</h4>
-          <p className="text-gray-600">{institutionInfo.established}</p>
+          <h4 className="font-bold text-orange-500 mb-2">Established</h4>
+          <p className="text-gray-300">{institutionInfo.established}</p>
         </div>
         <div>
-          <h4 className="font-bold text-red-900 mb-2">Location</h4>
-          <div className="flex items-center text-gray-600">
+          <h4 className="font-bold text-orange-500 mb-2">Location</h4>
+          <div className="flex items-center text-gray-300">
             <MapPin size={16} className="mr-1" />
             {institutionInfo.location}
           </div>
@@ -375,45 +373,45 @@ const InstitutionDetails: React.FC<InstitutionDetailsProps> = ({ institution }) 
       {institution.name !== 'Ganapathi High School, Padubidri' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
-            <h4 className="font-bold text-red-900 mb-2">Contact</h4>
+            <h4 className="font-bold text-orange-500 mb-2">Contact</h4>
             <div className="space-y-2">
-              <div className="flex items-center text-gray-600">
+              <div className="flex items-center text-gray-300">
                 <Phone size={16} className="mr-2" />
                 {institutionInfo.phone}
               </div>
-              <div className="flex items-center text-gray-600">
+              <div className="flex items-center text-gray-300">
                 <Mail size={16} className="mr-2" />
                 {institution.name === 'Poornaprajna PU College Adamaru' ? (
-                  <a href="mailto:principalpuc@poornaprajnaadamaru.edu.in" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:principalpuc@poornaprajnaadamaru.edu.in" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'PPEC Sadashivanagar(Pre-Primary , Primary & High School)' ? (
-                  <a href="mailto:ssng.support@ppec.edu.in" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:ssng.support@ppec.edu.in" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'Poornaprajna PU College, Udupi' ? (
-                  <a href="mailto:office.udupi@ppuc.edu.in" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:office.udupi@ppuc.edu.in" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'PPEC SKNagar' ? (
-                  <a href="mailto:office.sknagar@ppec.edu.in" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:office.sknagar@ppec.edu.in" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'Poornaprajna Institute of Scientific Research' ? (
-                  <a href="mailto:info@ppisr.res.in" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:info@ppisr.res.in" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'PPEC Indiranagar' ? (
-                  <a href="mailto:contact.indiranagar@ppec.edu.in" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:contact.indiranagar@ppec.edu.in" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'Poornaprajna Institute of Management' ? (
-                  <a href="mailto:office@pim.ac.in" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:office@pim.ac.in" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'Poornaprajna Evening College Udupi' ? (
-                  <a href="mailto:sppecudupi@gmail.com" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:sppecudupi@gmail.com" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'PPEC Yelahanka (Pre-primary ,Primary & High School)' ? (
-                  <a href="mailto:contact.yelahanka@ppec.edu.in" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:contact.yelahanka@ppec.edu.in" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'Poornaprajna College Udupi' ? (
-                  <a href="mailto:office@ppc.edu.in" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:office@ppc.edu.in" className="text-orange-400 hover:underline">MAIL</a>
                 ) : institution.name === 'PPEC Delhi' ? (
-                  <a href="mailto:ppps2009@gmail.com" className="text-blue-600 hover:underline">MAIL</a>
+                  <a href="mailto:ppps2009@gmail.com" className="text-orange-400 hover:underline">MAIL</a>
                 ) : (
-                  <a href={`mailto:${institutionInfo.email}`} className="text-blue-600 hover:underline">{institutionInfo.email}</a>
+                  <a href={`mailto:${institutionInfo.email}`} className="text-orange-400 hover:underline">{institutionInfo.email}</a>
                 )}
               </div>
             </div>
           </div>
           <div>
-            <h4 className="font-bold text-red-900 mb-2">Programs</h4>
-            <ul className="text-gray-600 space-y-1">
+            <h4 className="font-bold text-orange-500 mb-2">Programs</h4>
+            <ul className="text-gray-300 space-y-1">
               {institutionInfo.programs.map((program, index) => (
                 <li key={index} className="flex items-center">
                   <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>

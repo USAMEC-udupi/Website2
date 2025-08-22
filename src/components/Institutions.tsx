@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import RouletteWheel from './RouletteWheel';
 import InstitutionDetails from './InstitutionDetails';
-import Gallery from './Gallery';
-import Alumni from './Alumni';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const institutions = [
@@ -37,7 +35,7 @@ const Institutions = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-900">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-red-900 to-orange-500 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -49,11 +47,11 @@ const Institutions = () => {
       </section>
 
       {/* Interactive Wheel Section */}
-      <section className="py-16">
+      <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-red-900 mb-4">{t('institutions.explorer.title')}</h2>
-            <p className="text-lg text-gray-600">
+            <h2 className="text-3xl font-bold text-orange-500 mb-4">{t('institutions.explorer.title')}</h2>
+            <p className="text-lg text-gray-300">
               {t('institutions.explorer.description')}
             </p>
           </div>
@@ -72,12 +70,6 @@ const Institutions = () => {
           </div>
         </div>
       </section>
-
-      {/* Campus Gallery */}
-      <Gallery />
-
-      {/* Alumni Success Stories */}
-      <Alumni />
     </div>
   );
 };
